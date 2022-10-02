@@ -18,10 +18,10 @@ jobs:
           pip install -r requirements.txt
           python -m playwright install
           python -m playwright install-deps
-          sed -i "/reddit.creds/a \client_id = \"'$CLIENT_ID'\"" config.toml
-          sed -i "/reddit.creds/a \client_secret = \"'$CLIENT_SECRET'\"" config.toml
-          sed -i "/reddit.creds/a \username = \"'$REDDIT_USERNAME'\"" config.toml
-          sed -i "/reddit.creds/a \password = \"'$REDDIT_PASSWORD'\"" config.toml
+          sed -i "/reddit.creds/a \client_id = \"$CLIENT_ID\"" config.toml
+          sed -i "/reddit.creds/a \client_secret = \"$CLIENT_SECRET\"" config.toml
+          sed -i "/reddit.creds/a \username = \"$REDDIT_USERNAME\"" config.toml
+          sed -i "/reddit.creds/a \password = \"$REDDIT_PASSWORD\"" config.toml
           cat config.toml
       - name: make video
         run: |
