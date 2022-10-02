@@ -75,7 +75,13 @@ def download_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: in
 
         postcontentpath = f"assets/temp/{id}/png/title.png"
         page.set_default_timeout(120000)
-        page.locator('[data-test-id="post-content"]').screenshot(path= postcontentpath)
+        # page.locator('[data-test-id="post-content"]').screenshot(path= postcontentpath)
+        if "reddit.com" in page.url:
+            page.locator('[data-test-id="post-content"]').screenshot(path= postcontentpath)
+        else:
+            img_data = requests.get(page.url).content
+            with open(postcontentpath, 'wb') as handler:
+                handler.write(img_data)
 
         if storymode:
             page.locator('[data-click-id="text"]').screenshot(
