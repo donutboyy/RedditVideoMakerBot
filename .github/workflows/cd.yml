@@ -25,5 +25,6 @@ jobs:
           cat config.toml
       - name: make video
         run: |
+          cat config.toml
           python main.py
           echo hi
