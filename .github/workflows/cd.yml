@@ -23,6 +23,10 @@ jobs:
           sed -i "/reddit.creds/a \username = \"$REDDIT_USERNAME\"" config.toml
           sed -i "/reddit.creds/a \password = \"$REDDIT_PASSWORD\"" config.toml
           cat config.toml
+      - name: set python version
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
       - name: make video
         run: |
           cat config.toml
