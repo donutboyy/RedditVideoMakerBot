@@ -8,10 +8,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: setup
+        shell: bash
+        env:
+          SUPER_SECRET: ${{ secrets.NOT_TELLING }}
         run: |
           pip install -r requirements.txt
           python -m playwright install
           python -m playwright install-deps
+          sed -i '/reddit.creds/a \$SUPER_SECRET' config.toml
       - name: make video
         run: |
           python main.py
