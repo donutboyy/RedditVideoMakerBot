@@ -1,0 +1,33 @@
+name: CD
+
+on: [pull_request, workflow_dispatch]
+
+jobs:
+  make-video:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: set python version
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: setup
+        shell: bash
+        env:
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET : ${{ secrets.CLIENT_SECRET }}
+          REDDIT_USERNAME: ${{ secrets.REDDIT_USERNAME }}
+          REDDIT_PASSWORD: ${{ secrets.REDDIT_PASSWORD }}
+        run: |
+          pip install -r requirements.txt
+          python -m playwright install
+          python -m playwright install-deps
+          sed -i "/reddit.creds/a \client_id = \"$CLIENT_ID\"" config.toml
+          sed -i "/reddit.creds/a \client_secret = \"$CLIENT_SECRET\"" config.toml
+          sed -i "/reddit.creds/a \username = \"$REDDIT_USERNAME\"" config.toml
+          sed -i "/reddit.creds/a \password = \"$REDDIT_PASSWORD\"" config.toml
+          cat config.toml
+      - name: make video
+        run: |
+          cat config.toml
+          python main.py
