@@ -22,7 +22,7 @@ voice_choice = "streamlabspolly"
 
 [reddit.thread]
 random = true
-subreddit = "AskReddit+MaliciousCompliance"
+subreddit = "AskReddit"
 post_id = ""
 post_lang = ""
 max_comment_length = 500
