@@ -16,6 +16,7 @@ tiktok_voice = "en_us_006"
 python_voice = "1"
 py_voice_num = "2"
 voice_choice = "streamlabspolly"
+silence_duration = 0.3
 
 [reddit.creds]
 2fa = false
