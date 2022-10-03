@@ -78,7 +78,8 @@ def download_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: in
         postcontentpath = f"assets/temp/{id}/png/title.png"
         page.set_default_timeout(120000)
         # page.locator('[data-test-id="post-content"]').screenshot(path= postcontentpath)
-        if "reddit.com" in urlparse(page.url).netloc:
+        domain = urlparse(page.url).netloc
+        if "reddit.com" is domain or "www.reddit.com" is domain:
             page.locator(
                 '[data-test-id="post-content"]').screenshot(path=postcontentpath)
         else:
