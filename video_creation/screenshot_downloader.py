@@ -2,7 +2,9 @@ import json
 
 from pathlib import Path
 import re
+import requests
 from typing import Dict
+from urllib.parse import urlparse
 from utils import settings
 from playwright.async_api import async_playwright  # pylint: disable=unused-import
 
@@ -76,8 +78,9 @@ def download_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: in
         postcontentpath = f"assets/temp/{id}/png/title.png"
         page.set_default_timeout(120000)
         # page.locator('[data-test-id="post-content"]').screenshot(path= postcontentpath)
-        if "reddit.com" in page.url:
-            page.locator('[data-test-id="post-content"]').screenshot(path= postcontentpath)
+        if "reddit.com" in urlparse(page.url).netloc:
+            page.locator(
+                '[data-test-id="post-content"]').screenshot(path=postcontentpath)
         else:
             img_data = requests.get(page.url).content
             with open(postcontentpath, 'wb') as handler:
@@ -98,7 +101,8 @@ def download_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: in
                 if page.locator('[data-testid="content-gate"]').is_visible():
                     page.locator('[data-testid="content-gate"] button').click()
 
-                page.goto(f'https://reddit.com{comment["comment_url"]}', timeout=0)
+                page.goto(
+                    f'https://reddit.com{comment["comment_url"]}', timeout=0)
 
                 # translate code
 
@@ -120,4 +124,5 @@ def download_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: in
                     screenshot_num += 1
                     print("TimeoutError: Skipping screenshot...")
                     continue
-        print_substep("Screenshots downloaded Successfully.", style="bold green")
+        print_substep("Screenshots downloaded Successfully.",
+                      style="bold green")
